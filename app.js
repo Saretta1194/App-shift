@@ -64,7 +64,8 @@ const ROLES = {
   // -------- ASSIGNMENTS --------//
 
 
-  const ASSIGNMENTS = [
+
+const ASSIGNMENTS = [
     { workerId: 1, shiftId: 0, date: '2026-10-26' }, // John Doe - Breakfast Shift
     { workerId: 2, shiftId: 0, date: '2026-10-26' }, // Jane Smith - Breakfast Shift
     { workerId: 3, shiftId: 0, date: '2026-10-26' }, // Emily Johnson - Breakfast Shift
@@ -81,20 +82,33 @@ const ROLES = {
     { workerId: 6, shiftId: 0, date: '2026-10-28' }, // Sarah Davis - Breakfast Shift
     { workerId: 7, shiftId: 0, date: '2026-10-28' }, // Olivia Martinez - Breakfast Shift
     { workerId: 8, shiftId: 0, date: '2026-10-28' }, // James Anderson - Breakfast Shift
-    { workerId: 1, shiftId: 0, date: '2026-10-28' }, // John: late il 27, breakfast il 28 -> riposo troppo corto
-    { workerId: 5, shiftId: 1, date: '2026-10-28' }, // David: breakfast + middle lo stesso giorno -> sovrapposizione
-];
+    { workerId: 1, shiftId: 0, date: '2026-10-28' }, // John: late on the 27th, breakfast on the 28th -> rest too short
+    { workerId: 5, shiftId: 1, date: '2026-10-28' }, // David: breakfast + middle same day -> overlap
+  ];
 
-// -------- FUNCTIONS --------//
-function getShiftsFor(workerId, date) {
+  // -------- FUNCTIONS --------//
+
+  // All assignments of one worker on one day (always an array, [] if none).
+  function getShiftsFor(workerId, date) {
     return ASSIGNMENTS.filter(
       (assignment) => assignment.workerId === workerId && assignment.date === date
     );
   }
 
-  // -------- MANUAL TESTS (open the console, or run: node app.js) --------//
+  // ONE shift type (name, start, end, required roles) by its id.
+  // find() returns the first match as an object, or undefined if nothing matches.
+  function getShiftById(shiftId) {
+    return SHIFTS.find((shift) => shift.shiftId === shiftId);
+  }
 
-  console.log('John, 27 ott (atteso: ?):', getShiftsFor(1, '2026-10-27'));
-  console.log('John, 28 ott (atteso: ?):', getShiftsFor(1, '2026-10-28'));
-  console.log('David, 28 ott (atteso: ?):', getShiftsFor(5, '2026-10-28'));
-  console.log('Sarah, 27 ott (atteso: ?):', getShiftsFor(6, '2026-10-27'));
+  // -------- MANUAL TESTS (run: node app.js) --------//
+
+  console.log('John, 27 ott (atteso: 1):', getShiftsFor(1, '2026-10-27'));
+  console.log('John, 28 ott (atteso: 1):', getShiftsFor(1, '2026-10-28'));
+  console.log('David, 28 ott (atteso: 2):', getShiftsFor(5, '2026-10-28'));
+  console.log('Sarah, 27 ott (atteso: []):', getShiftsFor(6, '2026-10-27'));
+
+  console.log('shift 0 (atteso: Breakfast):', getShiftById(0));
+  console.log('shift 1 (atteso: Middle):', getShiftById(1));
+  console.log('shift 2 (atteso: Late):', getShiftById(2));
+  console.log('shift 99 (atteso: undefined):', getShiftById(99));
