@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shifts</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="toolbar">
+    <h1>Shifts</h1>
+
+    <div class="week-nav">
+      <button type="button" id="prev-week" aria-label="Previous week">←</button>
+      <strong id="week-label"></strong>
+      <button type="button" id="next-week" aria-label="Next week">→</button>
+    </div>
+
+    <div class="actions">
+      <label class="fill"><input type="checkbox" id="fill" checked> Use all contracted hours (extra people per shift)</label>
+      <button type="button" id="generate" class="primary">Generate schedule</button>
+      <button type="button" id="export-csv">Export CSV</button>
+      <button type="button" id="print">Print</button>
+      <button type="button" id="clear-week">Clear week</button>
+    </div>
+  </header>
+
+  <p id="status" class="status" role="status" aria-live="polite"></p>
+
+  <main>
+    <section>
+      <h2 class="visually-hidden">Weekly Schedule</h2>
+      <div class="table-wrap"><table id="schedule" class="schedule"></table></div>
+    </section>
+
+    <section>
+      <h2>Coverage <small>(assigned people / required)</small></h2>
+      <div class="table-wrap"><table id="coverage" class="coverage"></table></div>
+    </section>
+
+    <section>
+      <h2>Rule Check</h2>
+      <ul id="problems" class="problems"></ul>
+      <p class="legend">Rules: no overlapping, at least 11 hours of rest between two shifts, no more than the weekly contracted hours.</p>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
